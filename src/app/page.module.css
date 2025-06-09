@@ -1,15 +1,19 @@
 
 .corDeFundo {
+    display: flex;
+    flex-direction: row;
     background-color: #357DB7; 
-    width: 100%; 
-    height: 955px; 
+    width: 1000vh; 
+    height: 980px; 
 }
 
 
 .corDeFundoAmarela {
+    display: flex;
+    flex-direction: column;
     background-color: #FFE99D; 
-    width: 650px;  
-    height: 955px; 
+    width: 90vh;
+    height: 980px;
     border-top-right-radius: 50px; 
     border-bottom-right-radius: 50px;
     background-image: url("../app/image/Framee.png");
@@ -26,13 +30,19 @@
 }
 
 .logoIMG {
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  margin-left: 150%;
 }
 
 .FrameIMG {
   margin-left: 10%;
   display: flex;
-  background-color: red;
+}
 
+.titulo {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex: end;
 }
