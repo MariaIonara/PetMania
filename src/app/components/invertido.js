@@ -8,15 +8,13 @@ export default function Page(props) {
     return (
         <>
         {/*<Image className={styles.FrameIMG} src={IconFrame} />*/}
-            <div className={styles.corDeFundo}>
+            <div className={styles.corAmareloInvertido}>
                 {/*<p>oi</p>*/}
-                <div className={styles.corDeFundoAmarela}>
+                <div className={styles.corAzulInvertido}>
                     {/*<p>aaa</p>*/}
                 </div>
                 {props.children}
-                <Image className={styles.logoIMG} src={IconLogo} />
             </div>
         </>
     );
 }
-    

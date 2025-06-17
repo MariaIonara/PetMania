@@ -23,6 +23,29 @@
     
 }
 
+.corAmareloInvertido {
+    display: flex;
+    flex-direction: row;
+    background-color: #FFE99D; 
+    width: 100vw; 
+    height: 100vh; 
+    background-image: url("../app/image/cachorro.png");
+    background-repeat: no-repeat;
+    background-position-x: 90vw;
+    background-position-y: 87vh;
+    background-size: 20vh;
+}
+
+.corAzulInvertido {
+    display: flex;
+    flex-direction: column;
+    background-color: #357DB7; 
+    width: 40vw;
+    height: 100vh;
+    border-top-right-radius: 50px; 
+    border-bottom-right-radius: 50px;
+}
+
 .corDeFundoAmarela p {
     font-size: 20px;
     color: #333;
@@ -43,6 +66,15 @@
 .titulo {
   display: flex;
   align-items: center;
-  flex-direction: row;
-  flex: end;
+}
+
+.texto {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.caixaDeTexto {
+  background-color: #FEFFFF;
+  width: 558px;
+  height: 70px;
 }
