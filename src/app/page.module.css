@@ -40,7 +40,7 @@
     display: flex;
     flex-direction: column;
     background-color: #357DB7; 
-    width: 40vw;
+    width: 70vw;
     height: 100vh;
     border-top-right-radius: 50px; 
     border-bottom-right-radius: 50px;
@@ -68,13 +68,34 @@
   align-items: center;
 }
 
+.botao {
+  background-color: #357DB7;
+  width: 200px;
+  height: 50px;
+  border: none;
+  border-radius: 20px;
+}
+
 .texto {
   display: flex;
   flex-wrap: wrap;
 }
 
+.caixaCentralizada {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  flex-wrap: wrap;
+  border: none;
+
+}
+
+
 .caixaDeTexto {
+  display: flex;
   background-color: #FEFFFF;
   width: 558px;
   height: 70px;
+  color: #333;
 }
