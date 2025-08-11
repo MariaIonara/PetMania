@@ -1,24 +1,41 @@
-import db from "@/lib/db"
+import pool from '@/lib/db.js';
+import { put } from '@vercel/blob';
 
 export async function POST(request) {
-    const formData = await request.formData();
-    const nomeDoPet = formData.get("nomedopet");
-    const idadedoPet = formData.get("idadedopet");
-    const raca = formData.get("raca");
-    const sexo = formData.get("sexo");
+    try {
+        const formData = await request.formData();
+        const nomedopet = formData.get("nomedopet");
+        const idadedopet = formData.get("idadedopet");
+        const raca = formData.get("raca");
+        const sexo = formData.get("sexo");
+        const imagemPet = formData.get("imagem");
 
-    const query = `
+        if (!nomedopet || !idadedopet || !raca || !sexo) {
+            return Response.json({ error: 'Todos os campos são obrigatorios' },
+                { status: 400 }
+            );
+        }
+
+        const query = `
     INSERT INTO pet (nomedopet, idadedopet, raca, sexo)
     VALUES ($1, $2, $3, $4)
     RETURNING *;
     `
 
-    const values = [nomeDoPet, idadedoPet, raca, sexo];
-    const result = await db.query(query, values);
-    const petCadastrado = result.rows[0];
+        const values = [nomedopet, idadedopet, raca, sexo];
+        const result = await pool.query(query, values);
+        const petCadastrado = result.rows[0];
 
-    return new Response (JSON.stringify(petCadastrado), {
-        status: 201,
-        headers: { 'Content-Type': 'application/json'},
-    });
+        const blob = await put(`pets/${imagemPet}`, imagemPet, {
+            access: 'public',
+            addRandomSuffix: true,
+        });
+
+        return Response.json(petCadastrado, { status: 201 });
+
+    } catch (error) {
+        console.error('Erro na API cadastrarPet:', error);
+        return Response.json({ error: 'Error no servidor' },
+            { status: 500 });
+    }
 }

@@ -2,19 +2,20 @@
 
 import styles from "../page.module.css";
 import BackgroundDividido from "../components/invertido.js"
-import db from "@/lib/db"
 
-import Form from 'next/form'
 import { useState } from "react";
 
 
-export default async function Page() {
+export default function Page() {
     /* const [nome, setNome] = useState();*/
-    const alunos = await db.query("select * from usuario")
-    const [nomeDoPet, setNomeDoPet] = useState();
-    const [idadeDoPet, setIdadeDoPet] = useState();
-    const [raca, setRaca] = useState();
-    const [sexo, setSexo] = useState();
+    /*const alunos = await db.query("select * from usuario")*/
+    const [nomedopet, setNomeDoPet] = useState("");
+    const [idadedopet, setIdadeDoPet] = useState("");
+    const [raca, setRaca] = useState("");
+    const [sexo, setSexo] = useState("");
+    const [imagem, setImagem] = useState(null);
+    const [mensagem, setMensagem] = useState("");
+
 
 
     const handleSubmit = async (e) => {
@@ -22,9 +23,10 @@ export default async function Page() {
 
         const formData = new FormData();
 
-        formData.append('nomedopet', nomeDoPet);
-        formData.append('idadedopet', idadeDoPet);
+        formData.append('nomedopet', nomedopet);
+        formData.append('idadedopet', idadedopet);
         formData.append('raca', raca);
+        formData.append('imagem', imagem);
         formData.append('sexo', sexo);
 
         try {
@@ -35,10 +37,11 @@ export default async function Page() {
     
             if (res.ok) {
                 setMensagem('Pet cadastrado com sucesso!');
-                setNomeDoPet();
-                setIdadeDoPet();
-                setRaca();
-                setSexo();
+                setNomeDoPet("");
+                setIdadeDoPet("");
+                setRaca("");
+                setSexo("");
+                setImagem(null);
             } else {
                 const err = await res.json();
                 setMensagem(`Erro: ${err.error || 'Não foi possível cadastrar.'}`);
@@ -51,30 +54,45 @@ export default async function Page() {
 
 
     return (
+        
         <BackgroundDividido>
             <div>
-                <Form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
                     <fieldset className={styles.caixaCentralizada}>
-                        <input className={styles.caixaDeTexto} type="text" placeholder="Nome do Pet" value={nomeDoPet} onChange={(e) => setNomeDoPet(e.target.value)}/>
+                        <input type="file" onChange={(e) => setImagem(e.target.files[0])} accept="image/png image/jpg image/jpeg"/>
+                        <input className={styles.caixaDeTexto} type="text" placeholder="Nome do Pet" value={nomedopet} onChange={(e) => setNomeDoPet(e.target.value)}/>
 
                         <fieldset className={styles.caixaCentralizada}>
-                            <input className={styles.caixaDeTexto} type="text" placeholder="Idade do Pet" value={idadeDoPet} onChange={(e) => setIdadeDoPet(e.target.value)}/>
+                            <input className={styles.caixaDeTexto} type="number" placeholder="Idade do Pet" value={idadedopet} onChange={(e) => setIdadeDoPet(e.target.value)}/>
                         </fieldset>
 
                     </fieldset>
                     
                     <fieldset className={styles.caixaCentralizada}>
                         <select className={styles.caixaDeTexto} name="Raça" value={raca} onChange={(e) => setRaca(e.target.value)}>
+                            <option value="Raça">Raça</option>
                             <option value="Puudle">Puudle</option>
                             <option value="Buldogue">Buldogue</option>
                             <option value="Yorkshire Terrier">Yorkshire Terrier</option>
                         </select>
                     </fieldset>
 
+                    <fieldset className={styles.caixaCentralizada}>
+                        <label>
+                            <input type="radio" name="sexo" value="femea" checked={sexo === "femea" } onChange={(e) => setSexo(e.target.value)}/> Fêmea
+                        </label>
+                        <br />
+                         <label>
+                            <input type="radio" name="sexo" value="macho" checked={sexo === "macho" } onChange={(e) => setSexo(e.target.value)}/> Macho
+                        </label>
+                    </fieldset>
+
                     <div className={styles.caixaCentralizada}>
                         <button className={styles.botao} type="submit">Registar</button>
                     </div>
-                </Form>
+
+                    {mensagem && <p>{mensagem}</p>}
+                </form>
             </div>
         </BackgroundDividido>
     );
