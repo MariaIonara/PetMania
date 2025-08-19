@@ -11,6 +11,7 @@ export default function Page() {
     /*const alunos = await db.query("select * from usuario")*/
     const [nomedopet, setNomeDoPet] = useState("");
     const [idadedopet, setIdadeDoPet] = useState("");
+    const [enderecocidade, setEnderecocidade] = useState("");
     const [raca, setRaca] = useState("");
     const [sexo, setSexo] = useState("");
     const [imagem, setImagem] = useState(null);
@@ -25,6 +26,7 @@ export default function Page() {
 
         formData.append('nomedopet', nomedopet);
         formData.append('idadedopet', idadedopet);
+        formData.append('enderecocidade', enderecocidade);
         formData.append('raca', raca);
         formData.append('imagem', imagem);
         formData.append('sexo', sexo);
@@ -34,12 +36,13 @@ export default function Page() {
                 method: 'POST',
                 body: formData,
             });
-    
+
             if (res.ok) {
                 setMensagem('Pet cadastrado com sucesso!');
                 setNomeDoPet("");
                 setIdadeDoPet("");
                 setRaca("");
+                setEnderecocidade("");
                 setSexo("");
                 setImagem(null);
             } else {
@@ -54,20 +57,27 @@ export default function Page() {
 
 
     return (
-        
+
         <BackgroundDividido>
             <div>
+        
+                <h1 className={styles.tituloCadastre}>Cadastre seu Pet</h1>
+
                 <form onSubmit={handleSubmit}>
+
                     <fieldset className={styles.caixaCentralizada}>
-                        <input type="file" onChange={(e) => setImagem(e.target.files[0])} accept="image/png image/jpg image/jpeg"/>
-                        <input className={styles.caixaDeTexto} type="text" placeholder="Nome do Pet" value={nomedopet} onChange={(e) => setNomeDoPet(e.target.value)}/>
-
-                        <fieldset className={styles.caixaCentralizada}>
-                            <input className={styles.caixaDeTexto} type="number" placeholder="Idade do Pet" value={idadedopet} onChange={(e) => setIdadeDoPet(e.target.value)}/>
-                        </fieldset>
-
+                        <input type="file" onChange={(e) => setImagem(e.target.files[0])} accept="image/png image/jpg image/jpeg" />
                     </fieldset>
-                    
+
+                    <fieldset className={styles.caixaCentralizada}>
+                        <input className={styles.caixaDeTexto} type="text" placeholder="Nome do Pet" value={nomedopet} onChange={(e) => setNomeDoPet(e.target.value)} />
+                    </fieldset>
+
+                    <fieldset className={styles.caixaCentralizada}>
+                        <input className={styles.caixaDeTexto} type="number" placeholder="Idade do Pet" value={idadedopet} onChange={(e) => setIdadeDoPet(e.target.value)} />
+                    </fieldset>
+
+
                     <fieldset className={styles.caixaCentralizada}>
                         <select className={styles.caixaDeTexto} name="Raça" value={raca} onChange={(e) => setRaca(e.target.value)}>
                             <option value="Raça">Raça</option>
@@ -78,12 +88,16 @@ export default function Page() {
                     </fieldset>
 
                     <fieldset className={styles.caixaCentralizada}>
-                        <label>
-                            <input type="radio" name="sexo" value="femea" checked={sexo === "femea" } onChange={(e) => setSexo(e.target.value)}/> Fêmea
+                        <input className={styles.caixaDeTexto} type="text" placeholder="Endereço(cidade)" value={enderecocidade} onChange={(e) => setEnderecocidade(e.target.value)} required/>
+                    </fieldset>
+
+                    <fieldset className={styles.radioGroup}>
+                        <label className={styles.radioLabel}>
+                            <input  type="radio" name="sexo" value="femea" checked={sexo === "femea"} onChange={(e) => setSexo(e.target.value)} /> Fêmea
                         </label>
                         <br />
-                         <label>
-                            <input type="radio" name="sexo" value="macho" checked={sexo === "macho" } onChange={(e) => setSexo(e.target.value)}/> Macho
+                        <label className={styles.radioLabel}>
+                            <input type="radio" name="sexo" value="macho" checked={sexo === "macho"} onChange={(e) => setSexo(e.target.value)} /> Macho
                         </label>
                     </fieldset>
 

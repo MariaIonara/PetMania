@@ -9,20 +9,21 @@ export async function POST(request) {
         const raca = formData.get("raca");
         const sexo = formData.get("sexo");
         const imagemPet = formData.get("imagem");
+        const enderecocidade = formData.get("enderecocidade")
 
-        if (!nomedopet || !idadedopet || !raca || !sexo) {
+        if (!nomedopet || !idadedopet || !raca || !sexo || !enderecocidade) {
             return Response.json({ error: 'Todos os campos são obrigatorios' },
                 { status: 400 }
             );
         }
 
         const query = `
-    INSERT INTO pet (nomedopet, idadedopet, raca, sexo)
-    VALUES ($1, $2, $3, $4)
+    INSERT INTO pet (nomedopet, idadedopet, raca, sexo, enderecocidade)
+    VALUES ($1, $2, $3, $4, $5)
     RETURNING *;
     `
 
-        const values = [nomedopet, idadedopet, raca, sexo];
+        const values = [nomedopet, idadedopet, raca, sexo, enderecocidade];
         const result = await pool.query(query, values);
         const petCadastrado = result.rows[0];
 

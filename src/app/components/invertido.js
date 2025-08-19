@@ -1,19 +1,18 @@
 import styles from "../page.module.css";
-import IconLogo from "../image/logoo.png";
-
-import Image from 'next/image'
-
+import Image from 'next/image';
+import logo from "../image/logoo.png";
 
 export default function Page(props) {
     return (
         <>
-        {/*<Image className={styles.FrameIMG} src={IconFrame} />*/}
             <div className={styles.corAmareloInvertido}>
-                {/*<p>oi</p>*/}
                 <div className={styles.corAzulInvertido}>
-                    {/*<p>aaa</p>*/}
+                    {props.children}
                 </div>
-                {props.children}
+                <Image 
+                src={logo}
+                alt="logo"
+                />
             </div>
         </>
     );
