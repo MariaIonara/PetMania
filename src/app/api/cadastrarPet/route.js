@@ -40,3 +40,22 @@ export async function POST(request) {
             { status: 500 });
     }
 }
+
+export async function GET() {
+    try{
+       const result = await pool.query("SELECT * FROM pet ORDER BY id DESC");
+       const petCadastrado = result.rows; 
+
+       return new Response(JSON.stringify(petCadastrado), {
+        status:200,
+        headers: {'Content-Type': 'application/json'},
+       });
+
+    }catch (error) {
+        console.error('Erro ao buscar cadastrarPet:', error);
+        return new Response.json({ error: 'Error interno ao buscar dados' },
+            { status: 500 }
+        );
+    }
+    
+}
