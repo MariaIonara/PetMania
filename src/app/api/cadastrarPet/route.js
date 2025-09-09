@@ -18,7 +18,7 @@ export async function POST(request) {
         }
 
         const query = `
-    INSERT INTO pet (nomedopet, idadedopet, raca, sexo, enderecocidade)
+    INSERT INTO pet (nomedopet, idadedopet, raca_id, sexo, enderecocidade)
     VALUES ($1, $2, $3, $4, $5)
     RETURNING *;
     `

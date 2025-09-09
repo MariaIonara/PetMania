@@ -3,7 +3,7 @@
 import styles from "../page.module.css";
 import BackgroundDividido from "../components/invertido.js"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 export default function Page() {
@@ -16,6 +16,17 @@ export default function Page() {
     const [sexo, setSexo] = useState("");
     const [imagem, setImagem] = useState(null);
     const [mensagem, setMensagem] = useState("");
+    const [racas, setRacas] = useState([]);
+
+    useEffect(() => {
+	  const fetchRacas = async () => {
+	    const response = await fetch('/api/raca')
+	    const data = await response.json()
+	    setRacas(data);
+	  };
+	  
+	  fetchRacas();
+  }, []);
 
 
 
@@ -81,9 +92,7 @@ export default function Page() {
                     <fieldset className={styles.caixaCentralizada}>
                         <select className={styles.caixaDeTexto} name="Raça" value={raca} onChange={(e) => setRaca(e.target.value)}>
                             <option value="Raça">Raça</option>
-                            <option value="Puudle">Puudle</option>
-                            <option value="Buldogue">Buldogue</option>
-                            <option value="Yorkshire Terrier">Yorkshire Terrier</option>
+                            {racas.map((item) => <option key={item.id} value={item.id}>{item.nome}</option> )}
                         </select>
                     </fieldset>
 
