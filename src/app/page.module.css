@@ -91,6 +91,7 @@
 .texto {
   display: flex;
   flex-wrap: wrap;
+  color: #000000;
 }
 
 .caixaCentralizada {
@@ -131,4 +132,9 @@
   gap: 10px;
   border: none;
   margin-top: 40px;
+}
+
+/*teste*/
+.teste {
+  
 }
