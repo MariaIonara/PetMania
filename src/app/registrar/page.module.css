@@ -16,7 +16,7 @@
     height: 980px;
     border-top-right-radius: 50px; 
     border-bottom-right-radius: 50px;
-    background-image: url("../app/image/Framee.png");
+    background-image: url("../image/Framee.png");
     background-repeat: no-repeat;
     background-position: -17px;
     background-position-y: 308px;
@@ -29,7 +29,7 @@
     background-color: #FFE99D; 
     width: 100vw; 
     height: 100vh; 
-    background-image: url("../app/image/Framee.png");
+    background-image: url("../image/Framee.png");
     background-repeat: no-repeat;
     background-position-x: 48vw;
     background-position-y: 49vh;

@@ -1,8 +1,4 @@
-import styles from "../page.module.css";
-import IconLogo from "../image/logoo.png";
-
-import Image from 'next/image'
-
+import styles from "./Fundo.module.css";
 
 export default function Page(props) {
     return (
@@ -14,7 +10,6 @@ export default function Page(props) {
                     {/*<p>aaa</p>*/}
                 </div>
                 {props.children}
-                <Image className={styles.logoIMG} src={IconLogo} />
             </div>
         </>
     );

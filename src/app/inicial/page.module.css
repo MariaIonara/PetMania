@@ -1,0 +1,18 @@
+.titulo {
+  margin-top: calc(100vh*0.5);
+}
+
+.botao {
+  background-color: #57450a;
+  width: 200px;
+  height: 50px;
+  border: none;
+  border-radius: 20px;
+}
+
+.caixaCentralizadaInicio {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; 
+  align-items: center;
+}

@@ -1,4 +1,4 @@
-import styles from "../page.module.css";
+import styles from "./Invertido.module.css";
 import Image from 'next/image';
 import logo from "../image/logoo.png";
 

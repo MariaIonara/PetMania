@@ -1,6 +1,6 @@
 'use client'
 
-import styles from "./page.module.css";
+import styles from "../page.module.css";
 import BackgroundDividido from "../components/Invertido.js"
 
 import { useEffect, useState } from "react";
@@ -9,23 +9,17 @@ import { useEffect, useState } from "react";
 export default function Page() {
     /* const [nome, setNome] = useState();*/
     /*const alunos = await db.query("select * from usuario")*/
-    const [nomedopet, setNomeDoPet] = useState("");
-    const [idadedopet, setIdadeDoPet] = useState("");
-    const [enderecocidade, setEnderecocidade] = useState("");
-    const [raca, setRaca] = useState("");
-    const [sexo, setSexo] = useState("");
-    const [imagem, setImagem] = useState(null);
-    const [mensagem, setMensagem] = useState("");
-    const [racas, setRacas] = useState([]);
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
 
     useEffect(() => {
-	  const fetchRacas = async () => {
-	    const response = await fetch('/api/raca')
-	    const data = await response.json()
-	    setRacas(data);
-	  };
-	  
-	  fetchRacas();
+      const fetchRacas = async () => {
+        const response = await fetch('/api/raca')
+        const data = await response.json()
+        setRacas(data);
+      };
+      
+      fetchRacas();
   }, []);
 
 
