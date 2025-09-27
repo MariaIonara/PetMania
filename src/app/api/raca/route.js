@@ -2,7 +2,7 @@ import pool from '@/lib/db.js';
 
 export async function GET(request) {
     try {
-        const query = `SELECT id, nome FROM raca`
+        const query = `SELECT id, nome FROM raca`;
         const result = await pool.query(query);
         const racas = result.rows;
 

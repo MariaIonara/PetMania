@@ -51,7 +51,7 @@ export default function Page() {
         <BackgroundDividido>
             <div>
         
-                <h1 className={styles.tituloCadastre}>Cadastre-se</h1>
+                <h1 className={styles.titulo}>Cadastre-se</h1>
 
                 <form onSubmit={handleSubmit}>
 
