@@ -1,6 +1,6 @@
 'use client'
 
-import styles from "../page.module.css";
+import styles from "./page.module.css";
 import BackgroundDividido from "../components/fundoRegistro.js"
 
 import { useState } from "react";
@@ -78,6 +78,7 @@ export default function Page() {
                     {mensagem && <p>{mensagem}</p>}
                 </form>
             </div>
+           
         </BackgroundDividido>
     );
 }

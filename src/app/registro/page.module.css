@@ -1,0 +1,94 @@
+
+.corDeFundoAmarela p {
+    font-size: 20px;
+    color: #333;
+    margin: 0; 
+}
+
+.titulo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.tituloCadastre { 
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+}
+
+.botao {
+  background-color: #57450a;
+  width: 200px;
+  height: 50px;
+  border: none;
+  border-radius: 20px;
+}
+
+/*.botaoInicial{
+  background-color: #57450a;
+  width: 200px;
+  height: 50px;
+  border: none;
+  border-radius: 20px;
+}
+*/
+
+.texto {
+  display: flex;
+  flex-wrap: wrap;
+  color: #000000;
+}
+
+.caixaCentralizadaInicio {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; 
+  align-items: center;
+}
+
+.caixaCentralizada {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  flex-wrap: wrap;
+  border: none;
+
+}
+
+.caixaDeTexto {
+  display: flex;
+  background-color: #FEFFFF;
+  width: 558px;
+  height: 70px;
+  color: #000000;
+  border-radius: 30px;
+}
+
+.radioLabel {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-right: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.radioLabel input[type="radio"] {
+  margin-right: 8px;
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: none;
+  margin-top: 40px;
+}
+
+/*teste*/
+.teste {
+  
+}

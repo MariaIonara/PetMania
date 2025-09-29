@@ -16,7 +16,7 @@ export async function POST(request) {
 
         const query = `
     INSERT INTO cliente (nome, email, senha, telefone)
-    VALUES ($1, $2, $3, $4, $5)
+    VALUES ($1, $2, $3, $4)
     RETURNING *;
     `
 

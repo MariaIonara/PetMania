@@ -1,7 +1,7 @@
 'use client'
 
 import styles from "./page.module.css";
-import BackgroundDividido from "../components/Invertido.js"
+import BackgroundDividido from "../components/invertido.js"
 
 import { useEffect, useState } from "react";
 
