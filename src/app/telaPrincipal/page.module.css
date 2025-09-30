@@ -1,0 +1,142 @@
+
+.corDeFundo {
+    display: flex;
+    flex-direction: row;
+    background-color: #357DB7; 
+    width: 1000vh; 
+    height: 980px; 
+}
+
+
+.corDeFundoAmarela {
+    display: flex;
+    flex-direction: column;
+    background-color: #FFE99D; 
+    width: 90vh;
+    height: 980px;
+    border-top-right-radius: 50px; 
+    border-bottom-right-radius: 50px;
+    background-image: url("../image/Framee.png");
+    background-repeat: no-repeat;
+    background-position: -17px;
+    background-position-y: 308px;
+    
+}
+
+.corAmareloInvertido {
+    display: flex;
+    flex-direction: row;
+    background-color: #FFE99D; 
+    width: 100vw; 
+    height: 100vh; 
+    background-image: url("../image/Framee.png");
+    background-repeat: no-repeat;
+    background-position-x: 48vw;
+    background-position-y: 49vh;
+    background-size: 40vh;
+}
+
+.corAzulInvertido {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center; 
+  background-color: #357DB7; 
+  width: 60vw;
+  height: 100vh;
+  border-top-right-radius: 50px; 
+  border-bottom-right-radius: 50px;
+  padding-left: 4rem; 
+}
+
+
+.corDeFundoAmarela {
+    font-size: 20px;
+    color: #333;
+    margin: 0; 
+}
+
+.logoIMG {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.FrameIMG {
+  margin-left: 10%;
+  display: flex;
+}
+
+.titulo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.tituloCadastre { 
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+}
+
+.botao {
+  background-color: #57450a;
+  width: 200px;
+  height: 50px;
+  border: none;
+  border-radius: 20px;
+}
+
+.texto {
+  display: flex;
+  flex-wrap: wrap;
+  color: #000000;
+}
+
+.caixaCentralizadaInicio {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; 
+  align-items: center;
+}
+
+.caixaCentralizada {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  flex-wrap: wrap;
+  border: none;
+
+}
+
+.caixaDeTexto {
+  display: flex;
+  background-color: #FEFFFF;
+  width: 558px;
+  height: 70px;
+  color: #000000;
+  border-radius: 30px;
+}
+
+.radioLabel {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-right: 20px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.radioLabel input[type="radio"] {
+  margin-right: 8px;
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: none;
+  margin-top: 40px;
+}

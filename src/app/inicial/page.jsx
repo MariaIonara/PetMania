@@ -1,5 +1,5 @@
 import styles from "./page.module.css";
-import BackgroundDividido from "../components/Fundo.js"
+import BackgroundDividido from "../components/fundo.js"
 
 export default function Page() {
     return (
