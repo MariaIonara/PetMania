@@ -1,5 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap');
+
+
+.inicio {
+  padding: 50px 0;
+  margin-left: 20%;
+}
+
 .titulo {
   margin-top: calc(100vh*0.5);
+  display: flex;
+  justify-content: center;
+  font-family: "Inknut Antiqua", serif;
 }
 
 .botao {
@@ -8,11 +19,12 @@
   height: 50px;
   border: none;
   border-radius: 20px;
+  font-family:  "Inknut Antiqua", serif;
 }
 
 .caixaCentralizadaInicio {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end; 
+  justify-content: center; 
   align-items: center;
+
 }
