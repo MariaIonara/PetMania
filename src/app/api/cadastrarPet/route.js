@@ -1,5 +1,4 @@
 import pool from '@/lib/db.js';
-import { put } from '@vercel/blob';
 
 export async function POST(request) {
     try {
@@ -8,7 +7,6 @@ export async function POST(request) {
         const idadedopet = formData.get("idadedopet");
         const raca = formData.get("raca");
         const sexo = formData.get("sexo");
-        const imagemPet = formData.get("imagem");
         const enderecocidade = formData.get("enderecocidade")
 
         if (!nomedopet || !idadedopet || !raca || !sexo || !enderecocidade) {
@@ -26,11 +24,6 @@ export async function POST(request) {
         const values = [nomedopet, idadedopet, raca, sexo, enderecocidade];
         const result = await pool.query(query, values);
         const petCadastrado = result.rows[0];
-
-        const blob = await put(`pets/${imagemPet}`, imagemPet, {
-            access: 'public',
-            addRandomSuffix: true,
-        });
 
         return Response.json(petCadastrado, { status: 201 });
 

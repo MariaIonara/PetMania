@@ -4,6 +4,7 @@ import styles from "./page.module.css";
 import BackgroundDividido from "../components/invertido.js"
 
 import { useEffect, useState } from "react";
+import { put } from "@vercel/blob";
 
 
 export default function Page() {
@@ -39,16 +40,20 @@ export default function Page() {
         formData.append('idadedopet', idadedopet);
         formData.append('enderecocidade', enderecocidade);
         formData.append('raca', raca);
-        formData.append('imagem', imagem);
         formData.append('sexo', sexo);
 
         try {
             const res = await fetch('/api/cadastrarPet', {
                 method: 'POST',
                 body: formData,
+            }); 
+
+            const res2 = await fetch('/api/imagem', {
+                    method: 'POST',
+                body: imagem,
             });
 
-            if (res.ok) {
+            if (res.ok && res2.ok) {
                 setMensagem('Pet cadastrado com sucesso!');
                 setNomeDoPet("");
                 setIdadeDoPet("");
@@ -56,16 +61,18 @@ export default function Page() {
                 setEnderecocidade("");
                 setSexo("");
                 setImagem(null);
+                
             } else {
                 const err = await res.json();
                 setMensagem(`Erro: ${err.error || 'Não foi possível cadastrar.'}`);
             }
+
+            
         } catch (error) {
             console.error(error);
             setMensagem("Erro ao enviar os dados.")
         }
     }
-
 
     return (
 
