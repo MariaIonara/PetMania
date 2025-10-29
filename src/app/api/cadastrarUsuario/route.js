@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs"; 
 import pool from '@/lib/db.js';
 
 export async function POST(request) {
@@ -5,8 +6,9 @@ export async function POST(request) {
         const formData = await request.formData();
         const nome = formData.get("nome");
         const email = formData.get("email");
-        const senha = formData.get("senha");
-        const telefone = formData.get("telefone")
+        const senha = await bcrypt.hash(formData.get("senha"), 12);
+        const telefone = formData.get("telefone");
+        const role = "cliente";
 
         if (!nome || !email || !senha || !telefone) {
             return Response.json({ error: 'Todos os campos são obrigatorios' },
@@ -15,12 +17,12 @@ export async function POST(request) {
         }
 
         const query = `
-    INSERT INTO cliente (nome, email, senha, telefone)
-    VALUES ($1, $2, $3, $4)
+    INSERT INTO cliente (nome, email, senha, telefone, role)
+    VALUES ($1, $2, $3, $4, $5)
     RETURNING *;
     `
 
-        const values = [nome, email, senha, telefone];
+        const values = [nome, email, senha, telefone, role];
         const result = await pool.query(query, values);
         const usuarioCadastrado = result.rows[0];
 

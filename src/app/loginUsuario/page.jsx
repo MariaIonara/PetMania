@@ -1,9 +1,34 @@
 import styles from "./page.module.css";
 import BackgroundDividido from "../components/fundo.js"
 import Link from "next/link";
+import { signIn, useSession } from "next-auth/react";
 
 
 export default function Page() {
+
+  const { data: session } = useSession();
+
+  if (session) {
+    router.replace("/telaPrincipal");
+    return null;
+  }
+
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    try {
+      const res = await signIn("credentials", {
+        redirect: false,
+        email,
+        senha
+      });
+      if (res?.ok) route.push("/telaPrincipal");
+      else alert("Email e senha inválidos");
+    } catch (error) {
+      console.error(error)
+      alert('Erro de conexão')
+    }
+  }
+
   return (
     <BackgroundDividido>
       <div className={styles.caixaCentralizada}>
@@ -18,7 +43,7 @@ export default function Page() {
         </div>
 
         <button className={styles.botaoregistrar}> Registre-se </button>
-        <Link href="" className={styles.linkGoogle}> <img src="/google.png" alt="Google" className={styles.iconGoogle} />
+        <Link href="" className={styles.linkGoogle}> <img src="/google.png" alt="Google" onClick={() => signIn("google")}  className={styles.iconGoogle} />
           Continuar com o Google
         </Link>
 
