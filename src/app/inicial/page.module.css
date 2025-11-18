@@ -3,19 +3,20 @@
 
 .inicio {
   padding: 50px 0;
-  margin-left: 20%;
+  margin-right: 20%;
 }
 
 .titulo {
-  margin-top: calc(100vh*0.5);
+  margin-top: calc(10vh*0.5);
   display: flex;
   justify-content: center;
   font-family: "Inknut Antiqua", serif;
+  font-size: 50px;
 }
 
 .botao {
   background-color: #57450a;
-  width: 200px;
+  width: 500px;
   height: 50px;
   border: none;
   border-radius: 20px;
@@ -26,5 +27,6 @@
   display: flex;
   justify-content: center; 
   align-items: center;
+
 
 }

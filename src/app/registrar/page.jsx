@@ -5,7 +5,7 @@ import BackgroundDividido from "../components/invertido.js"
 
 import { useEffect, useState } from "react";
 import { put } from "@vercel/blob";
-
+import Link from "next/link";
 
 export default function Page() {
     /* const [nome, setNome] = useState();*/
@@ -28,8 +28,6 @@ export default function Page() {
 	  
 	  fetchRacas();
   }, []);
-
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();

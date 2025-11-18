@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 //import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
-import BackgroundDividido from "../components/fundo.js";
+import BackgroundDividido from "../components/login/fundo";
 import styles from "./page.module.css";
 
 export default function Page() {
@@ -55,7 +55,7 @@ export default function Page() {
         />
 
         <Link href="">Esqueceu a senha?</Link>
-
+        
         <button onClick={console.log("TESTE 2")} className={styles.botaoLogin}>
           Login
         </button>
@@ -63,9 +63,11 @@ export default function Page() {
         <div className={styles.blocoRegistrar}>
           <Link href="">Ainda não possui nenhuma conta?</Link>
         </div>
-
-        <button className={styles.botaoregistrar}>Registre-se</button>
-
+ 
+        <Link href='../registro'>
+          <button className={styles.botaoregistrar}>Registre-se</button>
+        </Link>
+        
         <Link href="" className={styles.linkGoogle}>
           <img
             src="/google.png"

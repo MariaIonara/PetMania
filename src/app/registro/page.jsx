@@ -4,6 +4,7 @@ import styles from "./page.module.css";
 import BackgroundDividido from "../components/fundoRegistro.js"
 
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Page() {
     /* const [nome, setNome] = useState();*/
@@ -72,7 +73,9 @@ export default function Page() {
                     </fieldset>
 
                     <div className={styles.caixaCentralizada}>
-                        <button className={styles.botao} type="submit">Continuar</button>
+                        <Link href='../registrar'>
+                            <button className={styles.botao} type="submit">Continuar</button>
+                        </Link>
                     </div>
 
                     {mensagem && <p>{mensagem}</p>}

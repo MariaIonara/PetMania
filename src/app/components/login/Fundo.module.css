@@ -1,0 +1,24 @@
+
+.corDeFundo {
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    justify-content: center; 
+    background-color: #357DB7; 
+    width: 100vw;
+    height: 100vh;
+}
+
+.corDeFundoAmarela {
+    display: flex;
+    background-color: #FFE99D; 
+    width: 50vw; 
+    height: 100vh;
+    border-top-right-radius: 50px; 
+    border-bottom-right-radius: 50px;
+    background-image: url("../../image/Framee.png");
+    background-repeat: no-repeat;
+    background-position-x: -1vw;
+    background-position-y: 35vh;
+    background-size: 55vh;
+}
