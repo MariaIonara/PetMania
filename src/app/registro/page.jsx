@@ -73,7 +73,7 @@ export default function Page() {
                     </fieldset>
 
                     <div className={styles.caixaCentralizada}>
-                        <Link href='../registrar'>
+                        <Link href='../registrarPet'>
                             <button className={styles.botao} type="submit">Continuar</button>
                         </Link>
                     </div>

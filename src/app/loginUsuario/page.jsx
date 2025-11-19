@@ -8,7 +8,7 @@ import styles from "./page.module.css";
 
 export default function Page() {
   //const { data: session } = useSession();
-  const router = useRouter();
+  //const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -55,7 +55,7 @@ export default function Page() {
         />
 
         <Link href="">Esqueceu a senha?</Link>
-        
+
         <button onClick={console.log("TESTE 2")} className={styles.botaoLogin}>
           Login
         </button>
@@ -63,11 +63,11 @@ export default function Page() {
         <div className={styles.blocoRegistrar}>
           <Link href="">Ainda não possui nenhuma conta?</Link>
         </div>
- 
+
         <Link href='../registro'>
           <button className={styles.botaoregistrar}>Registre-se</button>
         </Link>
-        
+
         <Link href="" className={styles.linkGoogle}>
           <img
             src="/google.png"

@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 /*import ClienteForm from '../src/app/components/ClienteForm'*/
-import Page from '../src/app/registrarPet/page'
+import Page from '../src/app/registro/page'
  
-describe('registrar', () => {
+describe('registro', () => {
   it('renderiza sem erros', () => {
     render(<Page />)
   })

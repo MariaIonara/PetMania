@@ -20,14 +20,14 @@ export default function Page() {
     const [racas, setRacas] = useState([]);
 
     useEffect(() => {
-	  const fetchRacas = async () => {
-	    const response = await fetch('/api/raca')
-	    const data = await response.json()
-	    setRacas(data);
-	  };
-	  
-	  fetchRacas();
-  }, []);
+        const fetchRacas = async () => {
+            const response = await fetch('http://localhost:3000/api/raca')
+            const data = await response.json()
+            setRacas(data);
+        };
+
+        fetchRacas();
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -41,13 +41,13 @@ export default function Page() {
         formData.append('sexo', sexo);
 
         try {
-            const res = await fetch('/api/cadastrarPet', {
+            const res = await fetch('http://localhost:3000/api/cadastrarPet', {
                 method: 'POST',
                 body: formData,
-            }); 
+            });
 
-            const res2 = await fetch('/api/imagem', {
-                    method: 'POST',
+            const res2 = await fetch('http://localhost:3000/api/imagem', {
+                method: 'POST',
                 body: imagem,
             });
 
@@ -59,13 +59,13 @@ export default function Page() {
                 setEnderecocidade("");
                 setSexo("");
                 setImagem(null);
-                
+
             } else {
                 const err = await res.json();
                 setMensagem(`Erro: ${err.error || 'Não foi possível cadastrar.'}`);
             }
 
-            
+
         } catch (error) {
             console.error(error);
             setMensagem("Erro ao enviar os dados.")
@@ -76,7 +76,7 @@ export default function Page() {
 
         <BackgroundDividido>
             <div>
-        
+
                 <h1 className={styles.titulo}>Cadastre seu Pet</h1>
 
                 <form onSubmit={handleSubmit}>
@@ -97,17 +97,17 @@ export default function Page() {
                     <fieldset className={styles.caixaCentralizada}>
                         <select className={styles.caixaDeTexto} name="Raça" value={raca} onChange={(e) => setRaca(e.target.value)}>
                             <option value="Raça">Raça</option>
-                            {racas.map((item) => <option key={item.id} value={item.id}>{item.nome}</option> )}
+                            {racas.map((item) => <option key={item.id} value={item.id}>{item.nome}</option>)}
                         </select>
                     </fieldset>
 
                     <fieldset className={styles.caixaCentralizada}>
-                        <input className={styles.caixaDeTexto} type="text" placeholder="Endereço(cidade)" value={enderecocidade} onChange={(e) => setEnderecocidade(e.target.value)} required/>
+                        <input className={styles.caixaDeTexto} type="text" placeholder="Endereço(cidade)" value={enderecocidade} onChange={(e) => setEnderecocidade(e.target.value)} required />
                     </fieldset>
 
                     <fieldset className={styles.radioGroup}>
                         <label className={styles.radioLabel}>
-                            <input  type="radio" name="sexo" value="femea" checked={sexo === "femea"} onChange={(e) => setSexo(e.target.value)} /> Fêmea
+                            <input type="radio" name="sexo" value="femea" checked={sexo === "femea"} onChange={(e) => setSexo(e.target.value)} /> Fêmea
                         </label>
                         <br />
                         <label className={styles.radioLabel}>
@@ -116,7 +116,7 @@ export default function Page() {
                     </fieldset>
 
                     <div className={styles.caixaCentralizada}>
-                        <button className={styles.botao} type="submit">Registrar</button>   
+                        <button className={styles.botao} type="submit">Registrar</button>
                     </div>
 
                     {mensagem && <p>{mensagem}</p>}
