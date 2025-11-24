@@ -1,39 +1,39 @@
 'use client';
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-//import { signIn, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import BackgroundDividido from "../components/login/fundo";
 import styles from "./page.module.css";
 
 export default function Page() {
-  //const { data: session } = useSession();
-  //const router = useRouter();
+  const { data: session } = useSession();
+  const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  /*
-   if (session) {
-     router.replace("/telaPrincipal");
-     return null;
-   }
-  
-   const handleLogin = async (e) => {
-     e.preventDefault();
-     try {
-       const res = await signIn("credentials", {
-         redirect: false,
-         email,
-         senha,
-       });
-       if (res?.ok) router.push("/telaPrincipal");
-       else alert("Email e senha inválidos");
-     } catch (error) {
-       console.error(error);
-       alert("Erro de conexão");
-     }
-   };
- */
+
+  if (session) {
+    router.replace("/telaPrincipal");
+    return null;
+  }
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await signIn("credentials", {
+        redirect: false,
+        email,
+        senha,
+      });
+      if (res?.ok) router.push("/telaPrincipal");
+      else alert("Email e senha inválidos");
+    } catch (error) {
+      console.error(error);
+      alert("Erro de conexão");
+    }
+  };
+
   return (
     <BackgroundDividido>
       <div className={styles.caixaCentralizada}>
