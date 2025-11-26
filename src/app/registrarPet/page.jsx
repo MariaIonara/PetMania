@@ -21,7 +21,7 @@ export default function Page() {
 
     useEffect(() => {
         const fetchRacas = async () => {
-            const response = await fetch('http://localhost:3000/api/raca')
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ""}/api/raca`)
             const data = await response.json()
             setRacas(data);
         };

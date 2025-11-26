@@ -14,7 +14,7 @@ export default function Page() {
     useEffect(() => {
         async function fetchPet() {
             try {
-                const res = await fetch('/api/cadastrarPet');
+                const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ""}/api/cadastrarPet`);
                 const data = await res.json();
                 setPet(data);
             } catch (error) {
