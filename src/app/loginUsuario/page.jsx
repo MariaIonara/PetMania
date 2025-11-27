@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useSession, signIn, getSession } from "next-auth/react";
+import { useSession, signIn, getSession, signOut } from "next-auth/react";
 
 import Link from "next/link";
 import BackgroundDividido from "../components/login/fundo";
@@ -15,6 +15,15 @@ export default function Page() {
   const [senha, setSenha] = useState("");
 
   console.log(session);
+
+  useEffect(() => {
+    getSession().then(sess => {
+      if (sess) {
+        signOut({ callbackUrl: "/loginUsuario" });
+      }
+    })
+  }, []);
+
 
   useEffect(() => {
     if (status === "authenticated" && session?.user?.id) {
@@ -86,6 +95,15 @@ export default function Page() {
           <button className={styles.botaoLogin} type="submit">
             Login
           </button>
+
+          <button 
+            type="button" 
+            className={styles.botaoLogin} 
+            onClick={() => signOut({ callbackUrl: "/loginUsuario" })}
+          >
+            Sair
+          </button>
+
 
           <div className={styles.blocoRegistrar}>
             <Link href="">Ainda não possui nenhuma conta?</Link>
