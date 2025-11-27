@@ -20,7 +20,7 @@
 }
 
 .texto {
-    margin-top: 1%;
+    margin-top: 2%;
     margin-left: 0.8%;
     font-family: "Jaro", sans-serif;
     font-size: 25px;
@@ -54,4 +54,5 @@
     border-radius: 20px;
     color: black;
     margin-top: 10px;
+    margin-left: 25px;
 }

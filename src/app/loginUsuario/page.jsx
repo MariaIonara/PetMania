@@ -1,5 +1,5 @@
 'use client';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
@@ -7,16 +7,21 @@ import BackgroundDividido from "../components/login/fundo";
 import styles from "./page.module.css";
 
 export default function Page() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
-  if (session) {
-    router.replace("/telaPrincipal");
-    return null;
-  }
+  console.log(session)
+
+
+  useEffect(() => {
+    if (status === "authenticated" && session?.user?.id) {
+      router.replace(`/perfil/${session.user.id}`);
+    }
+  }, [status, session, router]);
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -26,19 +31,29 @@ export default function Page() {
         email,
         senha,
       });
-      if (res?.ok) router.push("/telaPrincipal");
-      else alert("Email e senha inválidos");
+       if (res?.ok) {
+        const sessionAtualizada = await getSession();
+        if (sessionAtualizada?.user?.id) {
+          router.push(`/telaPrincipal`);
+        } else {
+          alert("Erro ao obter dados do usuário.");
+        }
+      } else {
+        alert("Credenciais inválidas");
+      }
     } catch (error) {
-      console.error(error);
-      alert("Erro de conexão");
+      console.error(error)
+      alert('Erro de conexão')
     }
-  };
+  }
+
+  if (status === "loading") return null;
 
   return (
     <BackgroundDividido>
       <div className={styles.caixaCentralizada}>
         <h2 className={styles.tituloLogin}>LOGIN</h2>
-
+        <form onSubmit={handleLogin}>
         <input
           className={styles.caixaDeTexto}
           type="text"
@@ -77,6 +92,7 @@ export default function Page() {
           />
           Continuar com o Google
         </Link>
+        </form>
       </div>
     </BackgroundDividido>
   );

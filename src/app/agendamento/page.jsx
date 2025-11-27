@@ -32,6 +32,14 @@ export default function Page() {
                     }
                 />
             </div>
+
+            <div className={styles.alinhar}>
+                <button className={styles.botoes}>Banho</button>
+            </div>
+
+            <div className={styles.alinhar}>
+                <button className={styles.botoes}>Banho</button>
+            </div>
         </div>
 
     );

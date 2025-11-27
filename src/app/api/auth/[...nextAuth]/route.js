@@ -7,7 +7,7 @@ import pool from "@/lib/db";
 async function getUserByEmail(email) {
     const client = await pool.connect();
     const res = await client.query(
-        "SELECT id, nome, email, senha, telefone, role FROM cliente WHERE email = $1",
+        "SELECT id, nome, email, senha, tipo, telefone FROM cliente WHERE email = $1",
         [email]
     );
     client.release();
@@ -50,7 +50,7 @@ const authOptions = {
                 } else {
                     const client = await pool.connect();
                     const res = await client.query(
-                        "INSERT INTO cliente (nome, email, role) VALUES ($1, $2, $3) RETURNING id, role",
+                        "INSERT INTO cliente (nome, email) VALUES ($1, $2) RETURNING id",
                         [profile.name ?? "Usuário", profile.email, "cliente"]
                     );
                     client.release();

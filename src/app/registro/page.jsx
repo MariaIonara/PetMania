@@ -12,6 +12,7 @@ export default function Page() {
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [tipo, setTipo] = useState("");
     const [telefone, setTelefone] = useState("");
     const [mensagem, setMensagem] = useState("");
 
@@ -23,6 +24,7 @@ export default function Page() {
         formData.append('nome', nome);
         formData.append('email', email);
         formData.append('senha', senha);
+        formData.append('tipo', tipo);
         formData.append('telefone', telefone);
 
         try {
@@ -36,6 +38,7 @@ export default function Page() {
                 setNome("");
                 setEmail("");
                 setSenha("");
+                setTipo("");
                 setTelefone("");
             } else {
                 const err = await res.json();
@@ -69,13 +72,17 @@ export default function Page() {
                     </fieldset>
 
                     <fieldset className={styles.caixaCentralizada}>
+                        <input className={styles.caixaDeTexto} type="text" placeholder="Tipo" value={tipo} onChange={(e) => setTipo(e.target.value)} required/>
+                    </fieldset>
+
+                    <fieldset className={styles.caixaCentralizada}>
                         <input className={styles.caixaDeTexto} type="text" placeholder="Telefone" value={telefone} onChange={(e) => setTelefone(e.target.value)} required/>
                     </fieldset>
 
                     <div className={styles.caixaCentralizada}>
-                        <Link href='../registrarPet'>
+    
                             <button className={styles.botao} type="submit">Continuar</button>
-                        </Link>
+                        
                     </div>
 
                     {mensagem && <p>{mensagem}</p>}

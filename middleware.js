@@ -4,7 +4,7 @@ import { getToken } from "next-auth/jwt";
 export async function middleware(req) {
     const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
     const { pathname } = req.nextUrl;
-
+    console.log("Cheguei aq")
     const precisaAuth =
         pathname.startsWith("/registrar") ||
         pathname.startsWith("/telaPrincipal") ||

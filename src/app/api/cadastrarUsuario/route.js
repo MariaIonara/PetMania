@@ -7,22 +7,23 @@ export async function POST(request) {
         const nome = formData.get("nome");
         const email = formData.get("email");
         const senha = await bcrypt.hash(formData.get("senha"), 12);
+        const tipo = formData.get("tipo");
         const telefone = formData.get("telefone");
-        const role = "cliente";
+        //const role = "cliente";
 
-        if (!nome || !email || !senha || !telefone) {
+        if (!nome || !email || !senha || !tipo || !telefone) {
             return Response.json({ error: 'Todos os campos são obrigatorios' },
                 { status: 400 }
             );
         }
 
         const query = `
-    INSERT INTO cliente (nome, email, senha, telefone, role)
+    INSERT INTO cliente (nome, email, senha, tipo, telefone)
     VALUES ($1, $2, $3, $4, $5)
     RETURNING *;
     `
 
-        const values = [nome, email, senha, telefone, role];
+        const values = [nome, email, senha, tipo, telefone];
         const result = await pool.query(query, values);
         const usuarioCadastrado = result.rows[0];
 
