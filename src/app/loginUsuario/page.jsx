@@ -96,9 +96,9 @@ export default function Page() {
             Login
           </button>
 
-          <button 
-            type="button" 
-            className={styles.botaoLogin} 
+          <button
+            type="button"
+            className={styles.botaoLogin}
             onClick={() => signOut({ callbackUrl: "/loginUsuario" })}
           >
             Sair
@@ -117,7 +117,7 @@ export default function Page() {
             <img
               src="/google.png"
               alt="Google"
-              onClick={() => console.log("TESTE")}
+              onClick={() => signIn("google")}
               className={styles.iconGoogle}
             />
             Continuar com o Google
