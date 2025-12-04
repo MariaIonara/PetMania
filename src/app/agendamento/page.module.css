@@ -26,25 +26,13 @@
     font-size: 25px;
 }
 
-.alinharBotoes {
-    display: flex;
-    flex-direction: column; 
-}
-
 .botoes {
     margin-left: 0.5%;
     margin-top: 20px;
-    background-color: #FFFFFF;
-    color: black;
     width: 234px;
     height: 33px;
-    border-radius: 20px;
-    border: none;
 }
 
-.botoes:hover {
-    background-color: #FAF3A8;
-}
 
 .textdescricao {
     background-color: #FFFFFF;

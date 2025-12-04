@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap');
+
+
+.alinhar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 2%;
+    margin-left: 1%;
+}
+
+
+.botoes {
+    margin-left: 1%;
+    margin-top: 20px;
+    background-color: #FFFFFF;
+    color: black;
+    width: 234px;
+    height: 33px;
+    border-radius: 20px;
+    border: none;
+}
+
+.botoes:hover {
+    background-color: #FAF3A8;
+}

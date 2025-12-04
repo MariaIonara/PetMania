@@ -6,14 +6,13 @@ import "react-day-picker/style.css";
 
 
 import { useState } from "react";
-
+import Botao from '../components/botao/page';
 
 export default function Page() {
     const [selected, setSelected] = useState(new Date());
 
     return (
         <div className={styles.fundo}>
-
             <div className={styles.alinhar}>
                 <p className={styles.texto}>Tipo de Serviço</p>
                 <p className={styles.texto}>Observações</p>
@@ -21,7 +20,10 @@ export default function Page() {
             </div>
 
             <div className={styles.alinhar}>
-                <button className={styles.botoes}>Banho</button>
+                <div className={styles.botoes}>
+                    <Botao />
+                </div>
+                
                 <input className={styles.textdescricao} type='text' placeholder='  Digite Aqui...' />
                 <DayPicker
                     mode="single"
@@ -33,13 +35,7 @@ export default function Page() {
                 />
             </div>
 
-            <div className={styles.alinhar}>
-                <button className={styles.botoes}>Banho</button>
-            </div>
-
-            <div className={styles.alinhar}>
-                <button className={styles.botoes}>Banho</button>
-            </div>
+            
         </div>
 
     );
