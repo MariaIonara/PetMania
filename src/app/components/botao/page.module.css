@@ -20,6 +20,7 @@
     height: 33px;
     border-radius: 20px;
     border: none;
+    cursor: pointer;
 }
 
 .botoes:hover {

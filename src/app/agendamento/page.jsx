@@ -9,7 +9,7 @@ import { useState } from "react";
 import Botao from '../components/botao/page';
 
 export default function Page() {
-    const [selected, setSelected] = useState(new Date());
+    const [selected, setSelected] = useState(new Date())
 
     return (
         <div className={styles.fundo}>

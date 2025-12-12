@@ -2,17 +2,18 @@
 
 import styles from "./page.module.css";
 import BackgroundDividido from "../components/fundoRegistro.js"
-
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 
 export default function Page() {
+    const router = useRouter();
     /* const [nome, setNome] = useState();*/
     /*const alunos = await db.query("select * from usuario")*/
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-    const [tipo, setTipo] = useState("");
+    const [tipo, setTipo] = useState("Cliente");
     const [telefone, setTelefone] = useState("");
     const [mensagem, setMensagem] = useState("");
 
@@ -40,6 +41,9 @@ export default function Page() {
                 setSenha("");
                 setTipo("");
                 setTelefone("");
+
+                router.push('/registrarPet')
+
             } else {
                 const err = await res.json();
                 setMensagem(`Erro: ${err.error || 'Não foi possível cadastrar.'}`);
@@ -68,11 +72,7 @@ export default function Page() {
                     </fieldset>
 
                     <fieldset className={styles.caixaCentralizada}>
-                        <input className={styles.caixaDeTexto} type="text" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)}/>
-                    </fieldset>
-
-                    <fieldset className={styles.caixaCentralizada}>
-                        <input className={styles.caixaDeTexto} type="text" placeholder="Tipo" value={tipo} onChange={(e) => setTipo(e.target.value)} required/>
+                        <input className={styles.caixaDeTexto} type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)}/>
                     </fieldset>
 
                     <fieldset className={styles.caixaCentralizada}>

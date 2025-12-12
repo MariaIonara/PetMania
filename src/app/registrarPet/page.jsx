@@ -2,12 +2,13 @@
 
 import styles from "./page.module.css";
 import BackgroundDividido from "../components/invertido.js"
-
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { put } from "@vercel/blob";
 import Link from "next/link";
 
 export default function Page() {
+    const router = useRouter();
     /* const [nome, setNome] = useState();*/
     /*const alunos = await db.query("select * from usuario")*/
     const [nomedopet, setNomeDoPet] = useState("");
@@ -60,6 +61,8 @@ export default function Page() {
                 setEnderecocidade("");
                 setSexo("");
                 setImagem(null);
+
+                router.push('/agendamento')
 
             } else {
                 const err = await res.json();
