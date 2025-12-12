@@ -3,33 +3,43 @@ import { useState } from 'react';
 import styles from './page.module.css'
 import "react-day-picker/style.css";
 
-export default function Page() {
-    const [servicoSel, setServicoSel] = useState("");
-
+export default function Page({ servicoSel, setServicoSel }) {
     return (
         <div className={styles.fundo}>
             <div className={styles.alinhar}>
-                <button className={styles.botoes} onClick={() => {
+                <button className={styles.botoes + " " + 
+                ((servicoSel=="Tosa")?
+                styles.selecionadoBotao:"")} 
+                onClick={() => {
                     setServicoSel("Tosa")
                 }}>Tosa</button>
             </div>
 
-            <div className={styles.alinhar} onClick={() => {
+            <div className={styles.alinhar}>
+                 <button className={styles.botoes + " " + 
+                ((servicoSel=="Banho")?
+                styles.selecionadoBotao:"")} 
+                onClick={() => {
                     setServicoSel("Banho")
-                }}>
-                <button className={styles.botoes}>Banho</button>
+                }}>Banho</button>
             </div>
 
-            <div className={styles.alinhar} onClick={() => {
+            <div className={styles.alinhar}>
+                <button className={styles.botoes + " " + 
+                ((servicoSel=="Banho e Tosa")?
+                styles.selecionadoBotao:"")} 
+                onClick={() => {
                     setServicoSel("Banho e Tosa")
-                }}>
-                <button className={styles.botoes}>Banho e Tosa</button>
+                }}>Banho e Tosa</button>
             </div>
 
-            <div className={styles.alinhar} onClick={() => {
-                    setServicoSel("Tosa Higiência")
-                }}>
-                <button className={styles.botoes}>Tosa Higiênica</button>
+            <div className={styles.alinhar}>
+                <button className={styles.botoes + " " + 
+                ((servicoSel=="Tosa Higiênica")?
+                styles.selecionadoBotao:"")} 
+                onClick={() => {
+                    setServicoSel("Tosa Higiênica")
+                }}>Tosa Higiênica</button>
             </div>
         </div>
 

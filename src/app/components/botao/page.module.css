@@ -12,6 +12,8 @@
 
 
 .botoes {
+    font-family: geist;
+    font-size: 15px;
     margin-left: 1%;
     margin-top: 20px;
     background-color: #FFFFFF;
@@ -21,8 +23,14 @@
     border-radius: 20px;
     border: none;
     cursor: pointer;
+    transition: 200ms;
 }
 
 .botoes:hover {
+    background-color: rgb(240, 240, 240);
+    scale: 0.98;
+}
+.selecionadoBotao {
     background-color: #FAF3A8;
+    scale: 0.98;
 }
