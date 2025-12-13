@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { put } from "@vercel/blob";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export default function Page() {
     const router = useRouter();
@@ -19,6 +20,8 @@ export default function Page() {
     const [imagem, setImagem] = useState(null);
     const [mensagem, setMensagem] = useState("");
     const [racas, setRacas] = useState([]);
+    const { data: session, status } = useSession();
+    const usuario = session?.user;
 
     useEffect(() => {
         const fetchRacas = async () => {
@@ -34,24 +37,33 @@ export default function Page() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
-
-        formData.append('nomedopet', nomedopet);
-        formData.append('idadedopet', idadedopet);
-        formData.append('enderecocidade', enderecocidade);
-        formData.append('raca', raca);
-        formData.append('sexo', sexo);
+        if (!usuario?.id) {
+            alert("Você não está logado.");
+            return;
+        }
 
         try {
-            const res = await fetch('http://localhost:3000/api/cadastrarPet', {
+            const res2 = await fetch('/api/imagem', {
+                method: 'POST',
+                body: imagem,
+            });
+            const data = await res2.json();  // A resposta da API com o URL
+            const imagemUrl = data.url;
+
+            const formData = new FormData();
+            formData.append('nomedopet', nomedopet);
+            formData.append('idadedopet', idadedopet);
+            formData.append('enderecocidade', enderecocidade);
+            formData.append('raca', raca);
+            formData.append('sexo', sexo);
+            formData.append('idusuario', usuario?.id);
+            formData.append('imagempet', imagemUrl);
+
+            const res = await fetch('/api/cadastrarPet', {
                 method: 'POST',
                 body: formData,
             });
 
-            const res2 = await fetch('http://localhost:3000/api/imagem', {
-                method: 'POST',
-                body: imagem,
-            });
 
             if (res.ok && res2.ok) {
                 setMensagem('Pet cadastrado com sucesso!');
@@ -62,7 +74,7 @@ export default function Page() {
                 setSexo("");
                 setImagem(null);
 
-                router.push('/agendamento')
+                router.push('/telaPrincipal')
 
             } else {
                 const err = await res.json();

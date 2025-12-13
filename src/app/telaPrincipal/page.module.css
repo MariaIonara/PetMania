@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap');
 
 .corDeFundo {
     display: flex;
@@ -139,4 +141,59 @@
   gap: 10px;
   border: none;
   margin-top: 40px;
+}
+
+/*Codigo apollo*/
+
+.telaprincipal {
+  height: 100vh;
+  width: 100vh;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.cabecalho {
+  height: 223px;
+  width: 100vw;
+  background: #FFE99D;
+  background-image: url('../image/topo.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+
+}
+.mainpage {
+  background: #357DB7;
+  flex: 1;
+  flex-direction: column;
+  align-items: start;
+  position: relative;
+  padding: 10px;
+  padding-left: 100px;
+  padding-right: 100px;
+
+  justify-content: space-around;
+}
+.add {
+  font-family: geist;
+  color: white;
+  font-size: 4rem;
+  background: rgb(71, 185, 255);
+  border-radius: 100%;
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: 200ms;
+}
+.add:hover {
+  scale: 1.05;
 }
