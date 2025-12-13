@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap');
 
 .corDeFundo {
     display: flex;
@@ -71,6 +73,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: 'Inknut Antiqua', serif;
+  font-weight: 400;
   
 }
 
@@ -81,11 +85,18 @@
 }
 
 .botao {
-  background-color: #57450a;
-  width: 200px;
-  height: 50px;
+  background-color: #3C2A02;
+  width: 558px;
+  height: 60px;
   border: none;
   border-radius: 20px;
+  font-family: "jaro", serif;
+  font-size: 1.5rem;
+  transition: 200ms;
+}
+.botao:hover {
+  background-color: #57450a;
+  cursor: pointer;
 }
 
 /*.botaoInicial{
@@ -114,19 +125,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 30px;
   flex-wrap: wrap;
   border: none;
 
 }
 
 .caixaDeTexto {
-  display: flex;
   background-color: #FEFFFF;
   width: 558px;
   height: 70px;
-  color: #000000;
-  border-radius: 30px;
+  color: #3C2A02;
+  border-radius: 25px;
+  padding: 16px;
+  border: none;
+  outline: none;
+  font-family: "jaro", serif;
+  font-size: 1.5rem;
+  background: white;
 }
 
 .radioLabel {
@@ -143,14 +159,58 @@
 }
 
 .radioGroup {
-  display: flex;
+  display: block;
   flex-direction: column;
-  gap: 10px;
+  justify-content: start;
+  align-items: start;
   border: none;
   margin-top: 40px;
+  font-family: "Inknut Antiqua";
+  gap: 0px;
 }
 
-/*teste*/
-.teste {
-  
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modalBox {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  font-family: Jaro, serif;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.modalTitle {
+  font-size: 32px;
+  font-weight: 100;
+  margin-bottom: 15px;
+  color: black;
+}
+
+.modalText {
+  font-size: 23px;
+  margin-bottom: 25px;
+  color: rgba(0, 0, 0, 0.748);
+}
+
+.modalButton {
+  font-family: Jaro, serif;
+  font-size: 18px;
+  padding: 10px 30px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: black;
+  color: white;
 }

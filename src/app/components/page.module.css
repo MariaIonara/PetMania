@@ -19,7 +19,7 @@
   align-items: center; 
   justify-content: center; 
   background-color: #357DB7; 
-  width: 60vw;
+  width: 70vw;
   height: 100vh;
   border-top-right-radius: 50px; 
   border-bottom-right-radius: 50px;
@@ -65,6 +65,13 @@
   border: none;
   border-radius: 20px;
   margin-left: -350px;
+  font-family: "Jaro", sans-serif;
+  font-size: 1.5rem;
+  transition: 200ms;
+}
+.botao:hover {
+  background-color: #57450a;
+  cursor: pointer;
 }
 
 .Containerbotao {

@@ -1,9 +1,13 @@
+'use client'
+
 import styles from "./page.module.css";
 import Image from 'next/image';
 import logo from "../image/logoo.png";
 import cachorro from "../image/cachorro.png"
+import { useRouter } from "next/navigation";
 
 export default function Page(props) {
+    const router = useRouter();
     return (
         <>
             <div className={styles.corAmareloInvertido}>
@@ -22,7 +26,9 @@ export default function Page(props) {
                         <p>OLÁ, <br /> SEJA BEM VINDO!</p>
                     </div>
                     <div className={styles.Containerbotao}>
-                        <button className={styles.botao}>LOGIN</button>
+                        <button className={styles.botao} onClick={() => {
+                            router.push('/loginUsuario');
+                        }}>LOGIN</button>
                     </div>
                 </div>
                 

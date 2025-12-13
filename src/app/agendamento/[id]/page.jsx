@@ -3,10 +3,8 @@
 import styles from './page.module.css'
 import { DayPicker, } from "react-day-picker";
 import "react-day-picker/style.css";
-
-
 import { useState } from "react";
-import Botao from '../components/botao/page';
+import Botao from '../../components/botao/page';
 
 export default function Page() {
     const [selected, setSelected] = useState(new Date())
@@ -16,6 +14,10 @@ export default function Page() {
 
     return (
         <div className={styles.fundo}>
+            <div className={styles.cabecalho}>
+
+           </div>
+           
             {
                 (verfinalizar) ?
                     <div className={styles.fundoBox + " " + ((verfinalizar ? styles.escuro : null))}>
@@ -35,13 +37,15 @@ export default function Page() {
                             <button style={{
                                 fontFamily: 'geist', fontSize: 15, background: '#235f94ff',
                                 color: 'white', borderRadius: 10, padding: 7, outline: 'none', cursor: 'pointer', border: 'none'
-                            }}>Agendar</button>
+                            }} onClick={() => setVerfinalizar(false)}>Agendar</button>
                         </div>
                     </div>
                     : null
             }
+            {/*<p className={styles.texto} style={{ marginLeft: 20}}>Pet Selecionado: Pollico</p>*/}
             <div className={styles.alinhar}>
-                <p className={styles.texto}>Tipo de Serviço</p>
+                
+                <p className={styles.texto} >Tipo de Serviço</p>
                 <p className={styles.texto}>Observações</p>
                 <p className={styles.texto}>Data de agendamento</p>
             </div>
@@ -62,27 +66,50 @@ export default function Page() {
                         onChange={(e) => setTexto(e.target.value)}
                     >
                     </textarea>
-                    <button
-                        onClick={() => {
-                            setVerfinalizar(true);
-                        }}
-                        style={{
-                            fontFamily: 'geist', fontSize: 15, background: 'black',
-                            color: 'white', borderRadius: 10, padding: 7, outline: 'none', cursor: 'pointer', border: 'none'
-                        }}>Salvar</button>
                 </div>
-
-
-                <DayPicker
+                
+                <div style={{ display: 'flex', flexDirection: 'column'}}>
+                    <DayPicker
                     mode="single"
                     selected={selected}
                     onSelect={setSelected}
-                    style={{ zIndex: 2 }}
+                    className={styles.dayPicker}
+                    classNames={{
+                        caption: styles.caption,
+                       
+                        nav_button: styles.navButton,
+                        table: styles.table,
+                        head_cell: styles.headCell,
+                        cell: styles.cell,
+                        day: styles.day,
+                        day_selected: styles.daySelected,
+                        day_today: styles.dayToday,
+                        day_outside: styles.dayOutside,
+                        day_disabled: styles.dayDisabled,
+                        footer: styles.footer
+                    }}
                     footer={
-                        selected ? `Data Selecionada: ${selected.toLocaleDateString()}` : "Pick a day."
+                        selected
+                        ? `Data Selecionada: ${selected.toLocaleDateString()}`
+                        : "Escolha uma data"
                     }
-                />
+                    />
+                    <p className={styles.texto} >Horário de agendamento</p>
+                    <input type="text" className={styles.inputHorario} placeholder='//PARA FAZER'
+                    style={{ background: 'white', outline: 'none', border: 'none', padding: 10, borderRadius: 20, fontSize: '1.2rem', fontFamily: 'Jaro', color: '#3C2A02', marginTop: 10 }}
+                    />
+                </div>
+                
+
             </div>
+            <button
+                onClick={() => {
+                    if (selected && texto.length > 0 && servicoSel.length > 0) {
+                        setVerfinalizar(true);
+                    }
+                }}
+                className={
+                    ` ` + (selected && texto.length > 0 && servicoSel.length > 0 ? styles.seguir : styles.seguirInativo)}>Seguir</button>
 
 
         </div>

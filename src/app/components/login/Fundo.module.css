@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jaro:opsz@6..72&display=swap');
 
 .corDeFundo {
     display: flex;
@@ -10,15 +12,26 @@
 }
 
 .corDeFundoAmarela {
-    display: flex;
+  
     background-color: #FFE99D; 
-    width: 50vw; 
+    width: 40vw; 
     height: 100vh;
     border-top-right-radius: 50px; 
     border-bottom-right-radius: 50px;
-    background-image: url("../../image/Framee.png");
     background-repeat: no-repeat;
-    background-position-x: -1vw;
-    background-position-y: 35vh;
     background-size: 55vh;
+ 
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding-left: 20px;
+    flex-direction: column-reverse;
+    overflow: hidden;
+}
+.grandetexto {
+    font-family: "JARO", serif;
+    color: #3C2A02;
+    font-size: 3rem;
 }

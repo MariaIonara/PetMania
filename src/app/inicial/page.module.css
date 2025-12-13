@@ -19,14 +19,18 @@
   width: 500px;
   height: 50px;
   border: none;
+  font-size: 1.2rem;
   border-radius: 20px;
   font-family:  "Inknut Antiqua", serif;
+  cursor: pointer;
+  transition: 200ms;
+}
+.botao:hover {
+  scale: 1.01;
 }
 
 .caixaCentralizadaInicio {
   display: flex;
   justify-content: center; 
   align-items: center;
-
-
 }

@@ -6,6 +6,7 @@ import { useSession, signIn, getSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import BackgroundDividido from "../components/login/fundo";
 import styles from "./page.module.css";
+import Carregar from '../components/ui/carregar';
 
 export default function Page() {
   const { data: session, status } = useSession();
@@ -13,27 +14,27 @@ export default function Page() {
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-
-  console.log(session);
+  const [carregando, setCarregando] = useState(false);
+  const [mostrarModalErro, setMostrarModalErro] = useState(false);
 
   useEffect(() => {
     getSession().then(sess => {
       if (sess) {
         signOut({ callbackUrl: "/loginUsuario" });
       }
-    })
+    });
   }, []);
-
 
   useEffect(() => {
     if (status === "authenticated" && session?.user?.id) {
-      router.replace(`/perfil/${session.user.id}`);
+      router.replace(`/telaPrincipal`);
     }
   }, [status, session, router]);
 
-
   const handleLogin = async (e) => {
     e.preventDefault();
+    setCarregando(true);
+
     try {
       const res = await signIn("credentials", {
         redirect: false,
@@ -47,39 +48,77 @@ export default function Page() {
         if (sessionAtualizada?.user?.id) {
           router.push(`/telaPrincipal`);
         } else {
-          alert("Erro ao obter dados do usuário.");
+          setMostrarModalErro(true);
         }
-
       } else {
-        alert("Credenciais inválidas");
+        setMostrarModalErro(true);
       }
 
     } catch (error) {
       console.error(error);
-      alert('Erro de conexão');
+      setMostrarModalErro(true);
+    } finally {
+      setCarregando(false);
     }
   };
 
-
-  // ⛔ Retornar aqui é permitido — depois dos hooks, tudo ok
   if (status === "loading") {
-    return <div>Carregando...</div>;
+    return (
+      <div style={{
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: 32,
+        fontFamily: "Jaro, serif",
+        width: "100vw",
+        background: "#326b9aff",
+        color: 'white',
+        flexDirection: 'column',
+        gap: 10,
+      }}>
+        <p>Carregando Sessão de Autenticação...</p>
+        <div className={styles.loader}></div>
+        
+      </div>
+    );
   }
-
 
   return (
     <BackgroundDividido>
+      {carregando && <Carregar />}
+
+      {mostrarModalErro && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalBox}>
+            <h2 className={styles.modalTitle}>Erro no login</h2>
+
+            <p className={styles.modalText}>
+              Não foi possível realizar o login.  
+              Tente novamente.
+            </p>
+
+            <button
+              className={styles.modalButton}
+              onClick={() => setMostrarModalErro(false)}
+            >
+              Tentar novamente
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className={styles.caixaCentralizada}>
         <h2 className={styles.tituloLogin}>LOGIN</h2>
 
         <form className={styles.caixaCentralizada} onSubmit={handleLogin}>
-
           <input
             className={styles.caixaDeTexto}
-            type="text"
+            type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
 
           <input
@@ -88,32 +127,29 @@ export default function Page() {
             placeholder="Senha"
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
+            required
           />
 
-          <Link href="">Esqueceu a senha?</Link>
+          <p
+            className={styles.inknut}
+            onClick={() => alert("Função ainda não implementada")}
+            style={{ cursor: 'pointer' }}
+          >
+            Esqueceu a senha?
+          </p>
 
           <button className={styles.botaoLogin} type="submit">
             Login
           </button>
 
-          <button
-            type="button"
-            className={styles.botaoLogin}
-            onClick={() => signOut({ callbackUrl: "/loginUsuario" })}
-          >
-            Sair
-          </button>
-
-
           <div className={styles.blocoRegistrar}>
-            <Link href="">Ainda não possui nenhuma conta?</Link>
+            <p className={styles.inknut}>Ainda não possui nenhuma conta?</p>
+            <Link href="../registro">
+              <button className={styles.botaoregistrar}>Registre-se</button>
+            </Link>
           </div>
 
-          <Link href="../registro">
-            <button className={styles.botaoregistrar}>Registre-se</button>
-          </Link>
-
-          <Link href="" className={styles.linkGoogle}>
+          <div className={styles.linkGoogle}>
             <img
               src="/google.png"
               alt="Google"
@@ -121,8 +157,7 @@ export default function Page() {
               className={styles.iconGoogle}
             />
             Continuar com o Google
-          </Link>
-
+          </div>
         </form>
       </div>
     </BackgroundDividido>

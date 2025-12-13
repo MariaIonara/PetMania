@@ -7,15 +7,21 @@ import { useEffect, useState } from "react";
 import { put } from "@vercel/blob";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import Carregar from "../components/ui/carregar";
 
 export default function Page() {
     const router = useRouter();
-    /* const [nome, setNome] = useState();*/
-    /*const alunos = await db.query("select * from usuario")*/
     const [nomedopet, setNomeDoPet] = useState("");
     const [idadedopet, setIdadeDoPet] = useState("");
     const [enderecocidade, setEnderecocidade] = useState("");
     const [raca, setRaca] = useState("");
+
+    const [carregando, setCarregando] = useState(false);
+    const [mostrarModal, setMostrarModal] = useState(false);
+    const [modalTitulo, setModalTitulo] = useState("");
+    const [modalSubtitulo, setModalSubtitulo] = useState("");
+    const [modalSucesso, setModalSucesso] = useState(false);
+
     const [sexo, setSexo] = useState("");
     const [imagem, setImagem] = useState(null);
     const [mensagem, setMensagem] = useState("");
@@ -42,12 +48,13 @@ export default function Page() {
             return;
         }
 
+        setCarregando(true);
         try {
             const res2 = await fetch('/api/imagem', {
                 method: 'POST',
                 body: imagem,
             });
-            const data = await res2.json();  // A resposta da API com o URL
+            const data = await res2.json();
             const imagemUrl = data.url;
 
             const formData = new FormData();
@@ -64,9 +71,14 @@ export default function Page() {
                 body: formData,
             });
 
-
             if (res.ok && res2.ok) {
-                setMensagem('Pet cadastrado com sucesso!');
+                
+                setModalTitulo("Cadastro realizado!");
+                setModalSubtitulo("Seu pet foi cadastrado com sucesso.");
+                setModalSucesso(true);
+                setMostrarModal(true);
+
+
                 setNomeDoPet("");
                 setIdadeDoPet("");
                 setRaca("");
@@ -74,31 +86,60 @@ export default function Page() {
                 setSexo("");
                 setImagem(null);
 
-                router.push('/telaPrincipal')
-
             } else {
-                const err = await res.json();
-                setMensagem(`Erro: ${err.error || 'Não foi possível cadastrar.'}`);
+                //const err = await res.json();
+                //setMensagem(`Erro: ${err.error || 'Não foi possível cadastrar.'}`);
+                setModalTitulo("Erro no cadastro");
+                setModalSubtitulo("Alguma coisa deu errado. Tente novamente.");
+                setModalSucesso(false);
+                setMostrarModal(true);
+
             }
-
-
         } catch (error) {
             console.error(error);
-            setMensagem("Erro ao enviar os dados.")
+
+            setModalTitulo("Erro de conexão");
+            setModalSubtitulo("Erro ao enviar os dados. Tente novamente.");
+            setModalSucesso(false);
+            setMostrarModal(true);
+           
+        } finally {
+            setCarregando(false);
         }
     }
 
     return (
 
         <BackgroundDividido>
+            {carregando && <Carregar />}
+            {mostrarModal && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalBox}>
+                        <h2 className={styles.modalTitle}>{modalTitulo}</h2>
+                        <p className={styles.modalText}>{modalSubtitulo}</p>
+                        <button
+                            className={styles.modalButton}
+                            onClick={() => {
+                                setMostrarModal(false);
+                                if (modalSucesso) router.push('/telaPrincipal');
+                            }}
+                        >
+                            Certo!
+                        </button>
+                    </div>
+                </div>
+            )}
+
             <div>
 
-                <h1 className={styles.titulo}>Cadastre seu Pet</h1>
+                <h1 className={styles.titulo}>Cadastre seu Pet!</h1>
 
                 <form onSubmit={handleSubmit}>
 
                     <fieldset className={styles.caixaCentralizada}>
-                        <input type="file" onChange={(e) => setImagem(e.target.files[0])} accept="image/png image/jpg image/jpeg" />
+                        <input type="file" style={{ background: 'white', padding: '10px', borderRadius: '15px', 
+                        fontSize: '1.2rem', color: '#3C2A02', fontFamily: 'Jaro'}}
+                        onChange={(e) => setImagem(e.target.files[0])} accept="image/png image/jpg image/jpeg" />
                     </fieldset>
 
                     <fieldset className={styles.caixaCentralizada}>
@@ -106,7 +147,20 @@ export default function Page() {
                     </fieldset>
 
                     <fieldset className={styles.caixaCentralizada}>
-                        <input className={styles.caixaDeTexto} type="number" placeholder="Idade do Pet" value={idadedopet} onChange={(e) => setIdadeDoPet(e.target.value)} />
+                         <input
+                            className={styles.caixaDeTexto}
+                            type="number"
+                            placeholder="Idade do Pet"
+                            value={idadedopet}
+                            min={1}
+                            onChange={(e) => {
+                            const valor = e.target.value;
+                            if (valor === "" || Number(valor) >= 1) {
+                                setIdadeDoPet(valor);
+                            }
+                            }}
+                            required
+                        />
                     </fieldset>
 
 
@@ -118,12 +172,13 @@ export default function Page() {
                     </fieldset>
 
                     <fieldset className={styles.caixaCentralizada}>
-                        <input className={styles.caixaDeTexto} type="text" placeholder="Endereço(cidade)" value={enderecocidade} onChange={(e) => setEnderecocidade(e.target.value)} required />
+                        <input className={styles.caixaDeTexto} type="text" placeholder="Endereço (Cidade)" value={enderecocidade} onChange={(e) => setEnderecocidade(e.target.value)} required />
                     </fieldset>
 
                     <fieldset className={styles.radioGroup}>
                         <label className={styles.radioLabel}>
-                            <input type="radio" name="sexo" value="femea" checked={sexo === "femea"} onChange={(e) => setSexo(e.target.value)} /> Fêmea
+                            <input type="radio" name="sexo" value="femea" checked={sexo === "femea"} onChange={(e) => setSexo(e.target.value)} 
+                            style={{ fontFamily: 'Inknut Antiqua'}}/> Fêmea
                         </label>
                         <br />
                         <label className={styles.radioLabel}>
@@ -134,8 +189,6 @@ export default function Page() {
                     <div className={styles.caixaCentralizada}>
                         <button className={styles.botao} type="submit">Registrar</button>
                     </div>
-
-                    {mensagem && <p>{mensagem}</p>}
                 </form>
             </div>
         </BackgroundDividido>

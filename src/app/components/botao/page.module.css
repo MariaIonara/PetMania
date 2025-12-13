@@ -4,22 +4,19 @@
 .alinhar {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 2%;
-    margin-left: 1%;
+    align-items: center;
+    justify-content: start;
 }
 
 
 .botoes {
-    font-family: geist;
-    font-size: 15px;
-    margin-left: 1%;
+    font-family: "Jaro";
+    font-size: 1.6rem;
     margin-top: 20px;
     background-color: #FFFFFF;
-    color: black;
+    color: #3C2A02;
     width: 234px;
-    height: 33px;
+    height: 35px;
     border-radius: 20px;
     border: none;
     cursor: pointer;
@@ -33,4 +30,10 @@
 .selecionadoBotao {
     background-color: #FAF3A8;
     scale: 0.98;
+}
+.preco {
+    font-family: "Jaro";
+    font-size: 1.6rem;
+    margin-left: 10px;
+    position: relative; top: 5px;
 }
