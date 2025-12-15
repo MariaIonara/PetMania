@@ -107,6 +107,10 @@
     cursor: pointer;
 }
 
+.inputVerMenorSelCaixa {
+  font-family: "Jaro";
+}
+
 .inputVerMenorSelCaixaDois, .estaSel {
   height: 50px;
   font-size: 1.35rem;

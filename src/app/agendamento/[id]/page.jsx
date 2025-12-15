@@ -5,24 +5,65 @@ import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import { useState } from "react";
 import Botao from '../../components/botao/page';
+import { useParams } from 'next/navigation';
+import Carregar from '@/app/components/ui/carregar';
+import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 export default function Page() {
+    const router = useRouter();
+    const { data: session, status } = useSession();
+    const usuario = session?.user;
+    const clientID = usuario?.id
     const [selected, setSelected] = useState(new Date())
     const [texto, setTexto] = useState("");
     const [verfinalizar, setVerfinalizar] = useState(false);
     const [servicoSel, setServicoSel] = useState("");
     const [verOptAgendamento, setVerOptAgendamento] = useState(false);
     const [ordemAtd, setOrdemAtd] = useState(null);
-
-    // Deve buscar no backend a cada vez que seleciono a data
+    const { id } = useParams(); 
+    const idPet = id;
     const [horariosJaSel, setHorariosJaSel] = useState([]);
     const [isFetchingHorarios, setIsFetchingHorarios] = useState(false);
     const [isFazendoAgendamento, setIsFazendoAgendamento] = useState(false);
 
-    async function getHorariosJaSel () {
+    function formatarDataLocal(date) {
+        const ano = date.getFullYear();
+        const mes = String(date.getMonth() + 1).padStart(2, '0');
+        const dia = String(date.getDate()).padStart(2, '0');
+        return `${ano}-${mes}-${dia}`;
+    }
+
+    function diaJaPassou(data = selected) {
+        if (!data) return false;
+        const hoje = new Date();
+        const dataSelecionada = new Date(data);
+        hoje.setHours(0, 0, 0, 0);
+        dataSelecionada.setHours(0, 0, 0, 0);
+        return dataSelecionada < hoje;
+    }
+
+    async function getHorariosJaSel(dataSelecionada) {
+        if (!dataSelecionada) return;
+        if (diaJaPassou(dataSelecionada)) return;
+
         setIsFetchingHorarios(true);
         try {
-           
+            const formData = new FormData();
+            formData.append("data_agendamento", formatarDataLocal(dataSelecionada));
+
+            const res = await fetch("/api/agendamento/ver-agendamentos", {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!res.ok) {
+                throw new Error("Erro ao buscar agendamentos");
+            }
+
+            const data = await res.json();
+            const ordens = data.map(item => item.ordem);
+            setHorariosJaSel(ordens);
         } catch (err) {
             console.error(err);
         } finally {
@@ -30,10 +71,39 @@ export default function Page() {
         }
     }
 
-    async function fazerAgendamento () {
-        setIsFazendoAgendamento(true); 
+    async function fazerAgendamento() {
+        setIsFazendoAgendamento(true);
         try {
-           
+            if (!clientID) {
+                alert("Você precisa estar logado para fazer um agendamento");
+                throw new Error("Usuário não logado");
+            }
+
+            const formData = new FormData();
+            formData.append("hora", dizerHorario(ordemAtd));
+            formData.append("data_agendamento", formatarDataLocal(selected));
+            formData.append("ordem", ordemAtd);
+            formData.append("id_cliente", clientID);
+            formData.append("id_pet", idPet);
+
+            const res = await fetch('/api/agendamento/fazer-agendamento', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!res.ok) {
+                throw new Error("Erro ao fazer o agendamento");
+            }
+
+            setSelected(new Date());
+            setTexto("");
+            setTexto("");
+            setServicoSel("");
+            setOrdemAtd(null);
+            setHorariosJaSel([]);
+
+            router.push("/telaPrincipal");
+
         } catch (err) {
             console.error(err);
         } finally {
@@ -41,7 +111,7 @@ export default function Page() {
         }
     }
 
-    function dizerHorario (ordemAtd) {
+    function dizerHorario(ordemAtd) {
         switch (ordemAtd) {
             case 1: return "7:00 - 8:00";
             case 2: return "8:30 - 9:30";
@@ -52,18 +122,6 @@ export default function Page() {
             default: return "Selecione um horário";
         }
     }
-    function diaJaPassou() {
-        if (!selected) return false;
-
-        const hoje = new Date();
-        const dataSelecionada = new Date(selected);
-
-        hoje.setHours(0, 0, 0, 0);
-        dataSelecionada.setHours(0, 0, 0, 0);
-
-        return dataSelecionada < hoje;
-    }
-
 
     function horarioJaPassou(ordem) {
         if (!selected) return false;
@@ -74,13 +132,8 @@ export default function Page() {
         hoje.setHours(0, 0, 0, 0);
         dataSelecionada.setHours(0, 0, 0, 0);
 
-        if (dataSelecionada < hoje) {
-            return true;
-        }
-
-        if (dataSelecionada > hoje) {
-            return false;
-        }
+        if (dataSelecionada < hoje) return true;
+        if (dataSelecionada > hoje) return false;
 
         const agora = new Date();
         const horaAtual = agora.getHours() + agora.getMinutes() / 60;
@@ -98,13 +151,12 @@ export default function Page() {
     }
 
     function horarioIndisponivel(ordem) {
-        return (
-            horariosJaSel.includes(ordem) || 
-            horarioJaPassou(ordem)           
-        );
+        return horariosJaSel.includes(ordem) || horarioJaPassou(ordem);
     }
 
-    return (
+    return ( <>
+        {isFetchingHorarios && <Carregar text={"Buscando horários disponíveis"}/>}
+        {isFazendoAgendamento && <Carregar text={"Fazendo agendamento..."}/>}
         <div className={styles.fundo}>
             <div className={styles.cabecalho}></div>
 
@@ -112,31 +164,38 @@ export default function Page() {
                 <div className={`${styles.fundoBox} ${styles.escuro}`}>
                     <div className={styles.veropsoes}>
                         <div className={styles.inputVerSelCaixa}>
-                            <p style={{ fontWeight: '500' }}>Tipo de Serviço</p>
-                            <p className={styles.inputVerMenorSelCaixa}>{servicoSel}</p>
+                            <p style={{ fontWeight: '500',  fontFamily: 'Jaro',
+                                fontSize: 27, color: 'black' }}>Tipo de Serviço</p>
+                            <p className={styles.inputVerMenorSelCaixa} style={{ fontFamily: 'Jaro', fontSize: 20, color: 'black'}}>{servicoSel}</p>
                         </div>
 
                         <div className={styles.inputVerSelCaixa}>
-                            <p style={{ fontWeight: '500' }}>Descrição</p>
-                            <p className={styles.inputVerMenorSelCaixa}>{texto}</p>
+                            <p style={{ fontWeight: '500',  fontFamily: 'Jaro',
+                                fontSize: 27, color: 'black' }}>Descrição</p>
+                            <p className={styles.inputVerMenorSelCaixa} style={{ fontFamily: 'Jaro', fontSize: 20, color: 'black'}}>{texto}</p>
                         </div>
 
                         <div className={styles.inputVerSelCaixa}>
-                            <p style={{ fontWeight: '500' }}>Data do agendamento</p>
-                            <p className={styles.inputVerMenorSelCaixa}>
+                           <p style={{ fontWeight: '500',  fontFamily: 'Jaro',
+                                fontSize: 27, color: 'black' }}>Data do agendamento</p>
+                            <p className={styles.inputVerMenorSelCaixa} style={{ fontFamily: 'Jaro', fontSize: 20, color: 'black'}}>
                                 {selected.toLocaleDateString()}
                             </p>
                         </div>
 
                         <div className={styles.inputVerSelCaixa}>
-                            <p style={{ fontWeight: '500' }}>Horário Selecionado</p>
-                            <p className={styles.inputVerMenorSelCaixa}>
+                            <p style={{ fontWeight: '500',  fontFamily: 'Jaro',
+                                fontSize: 27, color: 'black' }}>Horário selecionado</p>
+                            <p className={styles.inputVerMenorSelCaixa} style={{ fontFamily: 'Jaro', fontSize: 20, color: 'black'}}>
                                 {dizerHorario(ordemAtd)}
                             </p>
                         </div>
 
                         <button
-                            onClick={() => setVerfinalizar(false)}
+                            onClick={() => { 
+                                setVerfinalizar(false)
+                                fazerAgendamento();
+                            }}
                             style={{
                                 fontFamily: 'Jaro',
                                 fontSize: 23,
@@ -259,13 +318,17 @@ export default function Page() {
                 />
 
                 <div>
-                    <DayPicker
+                  <DayPicker
                     mode="single"
                     selected={selected}
                     onSelect={(dia) => {
+                        if (!dia) return;
+                        if (diaJaPassou(dia)) return;
+
                         setSelected(dia);
                         setOrdemAtd(null);
-                        // Deve buscar no backend os horarios disponiveis a cada vez que seleciono a data
+                        setHorariosJaSel([]);
+                        getHorariosJaSel(dia);
                     }}
                     className={styles.dayPicker}
                     classNames={{
@@ -330,5 +393,6 @@ export default function Page() {
                 Seguir
             </button>
         </div>
+        </>
     );
 }
